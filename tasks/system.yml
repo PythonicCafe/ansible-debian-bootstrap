@@ -54,6 +54,14 @@
     owner: root
     group: root
 
+- name: COPY | Configure vimrc
+  ansible.builtin.copy:
+    src: etc/skel/.vimrc
+    dest: /etc/skel/.vimrc
+    mode: 0644
+    owner: root
+    group: root
+
 - name: COPY | Configure Docker daemon
   ansible.builtin.copy:
     src: etc/docker/daemon.json
