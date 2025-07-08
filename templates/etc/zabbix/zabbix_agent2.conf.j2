@@ -1,0 +1,12 @@
+#
+# {{ ansible_managed }}
+#
+
+LogFile=/var/log/zabbix/zabbix_agent2.log
+LogFileSize=0
+Server=15.235.87.213
+ServerActive=15.235.87.213
+Hostname={{ dbs_hostname }}
+Include=/etc/zabbix/zabbix_agent2.d/*.conf
+ControlSocket=/tmp/agent.sock
+Include=./zabbix_agent2.d/plugins.d/*.conf

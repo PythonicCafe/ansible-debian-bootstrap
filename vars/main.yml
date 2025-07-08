@@ -2,6 +2,7 @@
 dbs_packages:
   - apt-listbugs
   - apt-transport-https
+  - bacula-fd
   - bash-completion
   - bridge-utils
   - build-essential
@@ -27,10 +28,11 @@ dbs_packages:
   - ncdu
   - nmap
   - nmon
-  - p7zip
+  - p7zip-full
   - rsync
   - rsyslog
   - sudo
+  - sysstat
   - tcptraceroute
   - telnet
   - tree
@@ -42,6 +44,7 @@ dbs_packages:
   - wget
   - whois
   - xz-utils
+  - zabbix-agent2
   - zip
 
 dbs_backports_packages: []
