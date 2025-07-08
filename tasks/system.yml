@@ -54,6 +54,14 @@
     owner: root
     group: root
 
+- name: COPY | Configure Docker daemon
+  ansible.builtin.copy:
+    src: etc/docker/daemon.json
+    dest: /etc/docker/daemon.json
+    mode: 0644
+    owner: root
+    group: root
+
 - name: TEMPLATE | Configure zabbix_agent2
   ansible.builtin.template:
     src: etc/zabbix/zabbix_agent2.conf.j2

@@ -38,6 +38,7 @@ dbs_alternative_awk: "/usr/bin/gawk"
 # Services to be restarted
 # -------------------------
 dbs_restart_services:
+  - docker
   - ssh
   - vnstat
   - zabbix-agent2
