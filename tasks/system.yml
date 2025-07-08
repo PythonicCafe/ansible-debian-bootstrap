@@ -46,6 +46,14 @@
     owner: root
     group: vnstat
 
+- name: COPY | Configure bashrc
+  ansible.builtin.copy:
+    src: etc/skel/.bashrc
+    dest: /etc/skel/.bashrc
+    mode: 0644
+    owner: root
+    group: root
+
 - name: TEMPLATE | Configure zabbix_agent2
   ansible.builtin.template:
     src: etc/zabbix/zabbix_agent2.conf.j2
