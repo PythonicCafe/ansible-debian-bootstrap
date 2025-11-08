@@ -19,10 +19,13 @@ This role bootstraps Debian hosts:
 
 Supported versions
 
+**Debian 13:** depends on `gnupg` being pre-installed on the target machine.
+
 | OS                     | Working      | Stable (active support) |
 | ---------------------- | -------      | ----------------------- |
 | Debian Bullseye (11)   | Yes          | Yes                     |
 | Debian Bookworm (12)   | Yes          | Yes                     |
+| Debian Trixie (13)     | Yes          | Yes                     |
 
 Requirements
 ------------

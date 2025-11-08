@@ -38,11 +38,11 @@
     owner: root
     group: root
 
-- name: COPY | Configure SSHD Slice
-  ansible.builtin.copy:
-    src: etc/systemd/system/ssh.service.d/slice.conf
-    dest: /etc/systemd/system/ssh.service.d/slice.conf
-    mode: 0644
+- name: DIRECTORY | Create ssh.service.d directory
+  ansible.builtin.file:
+    path: /etc/systemd/system/ssh.service.d
+    state: directory
+    mode: 0755
     owner: root
     group: root
 
@@ -86,11 +86,27 @@
     owner: root
     group: root
 
+- name: DIRECTORY | Create Docker daemon directory
+  ansible.builtin.file:
+    path: /etc/docker
+    state: directory
+    mode: 0755
+    owner: root
+    group: root
+
 - name: COPY | Configure Docker daemon
   ansible.builtin.copy:
     src: etc/docker/daemon.json
     dest: /etc/docker/daemon.json
     mode: 0644
+    owner: root
+    group: root
+
+- name: DIRECTORY | Create zabbix-agent2 config directory
+  ansible.builtin.file:
+    path: /etc/zabbix
+    state: directory
+    mode: 0755
     owner: root
     group: root
 
@@ -101,6 +117,10 @@
     mode: 0644
     owner: root
     group: root
+
+- name: Force systemd to reload configs
+  ansible.builtin.systemd:
+    daemon_reload: yes
 
 - name: RESTART | Services
   ansible.builtin.service:
