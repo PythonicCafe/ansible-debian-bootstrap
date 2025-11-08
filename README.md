@@ -1,7 +1,7 @@
 Ansible Debian bootstrap
 ====================================================
 
-[![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-leandroembu.ansible_debian_bootstrap-blue.svg)](https://galaxy.ansible.com/leandroembu/ansible_debian_bootstrap)
+[![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-pythoniccafe.debian_bootstrap-blue.svg)](https://galaxy.ansible.com/pythoniccafe/debian_bootstrap)
 
 **Forked from** [HanXHX/ansible-debian-bootstrap](https://github.com/HanXHX/ansible-debian-bootstrap) to deploy only Debian servers. Do not use it if you want to bootstrap Ubuntu/Devuan/Raspbian servers.
 
@@ -19,10 +19,13 @@ This role bootstraps Debian hosts:
 
 Supported versions
 
+**Debian 13:** depends on `gnupg` being pre-installed on the target machine.
+
 | OS                     | Working      | Stable (active support) |
 | ---------------------- | -------      | ----------------------- |
 | Debian Bullseye (11)   | Yes          | Yes                     |
 | Debian Bookworm (12)   | Yes          | Yes                     |
+| Debian Trixie (13)     | Yes          | Yes                     |
 
 Requirements
 ------------

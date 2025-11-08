@@ -1,0 +1,6 @@
+[Slice]
+CPUWeight=200
+IOWeight=200
+MemoryHigh=512M
+MemoryMax=1G
+TasksMax=1024

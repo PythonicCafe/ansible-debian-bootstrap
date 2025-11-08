@@ -38,6 +38,30 @@
     owner: root
     group: root
 
+- name: DIRECTORY | Create ssh.service.d directory
+  ansible.builtin.file:
+    path: /etc/systemd/system/ssh.service.d
+    state: directory
+    mode: 0755
+    owner: root
+    group: root
+
+- name: COPY | Configure SSHD critical.slice
+  ansible.builtin.copy:
+    src: etc/systemd/system/critical.slice
+    dest: /etc/systemd/system/critical.slice
+    mode: 0644
+    owner: root
+    group: root
+
+- name: COPY | Configure SSHD nice
+  ansible.builtin.copy:
+    src: etc/systemd/system/ssh.service.d/override.conf
+    dest: /etc/systemd/system/ssh.service.d/override.conf
+    mode: 0644
+    owner: root
+    group: root
+
 - name: COPY | Configure vnstat
   ansible.builtin.copy:
     src: etc/vnstat.conf
@@ -45,6 +69,58 @@
     mode: 0644
     owner: root
     group: vnstat
+
+- name: COPY | Configure bashrc
+  ansible.builtin.copy:
+    src: etc/skel/.bashrc
+    dest: /etc/skel/.bashrc
+    mode: 0644
+    owner: root
+    group: root
+
+- name: COPY | Configure vimrc
+  ansible.builtin.copy:
+    src: etc/skel/.vimrc
+    dest: /etc/skel/.vimrc
+    mode: 0644
+    owner: root
+    group: root
+
+- name: DIRECTORY | Create Docker daemon directory
+  ansible.builtin.file:
+    path: /etc/docker
+    state: directory
+    mode: 0755
+    owner: root
+    group: root
+
+- name: COPY | Configure Docker daemon
+  ansible.builtin.copy:
+    src: etc/docker/daemon.json
+    dest: /etc/docker/daemon.json
+    mode: 0644
+    owner: root
+    group: root
+
+- name: DIRECTORY | Create zabbix-agent2 config directory
+  ansible.builtin.file:
+    path: /etc/zabbix
+    state: directory
+    mode: 0755
+    owner: root
+    group: root
+
+- name: TEMPLATE | Configure zabbix_agent2
+  ansible.builtin.template:
+    src: etc/zabbix/zabbix_agent2.conf.j2
+    dest: /etc/zabbix/zabbix_agent2.conf
+    mode: 0644
+    owner: root
+    group: root
+
+- name: Force systemd to reload configs
+  ansible.builtin.systemd:
+    daemon_reload: yes
 
 - name: RESTART | Services
   ansible.builtin.service:

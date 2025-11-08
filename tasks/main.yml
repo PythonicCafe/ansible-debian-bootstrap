@@ -1,5 +1,4 @@
 ---
-
 - name: IMPORT_TASKS | Some fixes
   ansible.builtin.import_tasks: 000-fixes.yml
 
@@ -7,7 +6,7 @@
   ansible.builtin.include_vars: "{{ vars_file_item }}"
   with_first_found:
     - files:
-        - '{{ ansible_distribution }}/{{ ansible_distribution_release }}.yml'
+        - "{{ ansible_distribution }}/{{ ansible_distribution_release }}.yml"
         - "{{ ansible_distribution }}/main.yml"
   loop_control:
     loop_var: vars_file_item
@@ -19,9 +18,6 @@
 - name: IMPORT_TASKS | Configure APT
   ansible.builtin.import_tasks: apt.yml
 
-- name: IMPORT_TASKS | Manage system users
-  ansible.builtin.import_tasks: user.yml
-
 - name: INCLUDE_TASKS | Set hostname
   ansible.builtin.include_tasks: hostname.yml
   when: dbs_set_hostname and not dbs_is_docker
@@ -31,7 +27,7 @@
     name: "{{ dbs_timezone }}"
   when: dbs_set_timezone
   notify:
-    - 'restart cron'
+    - "restart cron"
 
 - name: INCLUDE_TASKS | Manage locales
   ansible.builtin.include_tasks: locale.yml
@@ -39,3 +35,6 @@
 
 - name: IMPORT_TASKS | Misc system configuration
   ansible.builtin.import_tasks: system.yml
+
+- name: IMPORT_TASKS | Manage system users
+  ansible.builtin.import_tasks: user.yml

@@ -5,7 +5,7 @@
 dbs_apt_default_host: "deb.debian.org"
 dbs_apt_use_src: false
 dbs_apt_components: "main"
-dbs_repo_old: "{% if ansible_local | d() and ansible_local.apt_sources | d() and ansible_local.apt_sources.dbs_repo_old | d() and ansible_local.apt_sources.dbs_repo_old | d() %}{{ ansible_local.apt_sources.dbs_repo_old }}{% else %}['dummy']{% endif %}"
+dbs_repo_old: []
 
 # -------------------------
 # System configuration
@@ -38,8 +38,10 @@ dbs_alternative_awk: "/usr/bin/gawk"
 # Services to be restarted
 # -------------------------
 dbs_restart_services:
+  #- docker # commented since we don't now if Docker is installed
   - ssh
   - vnstat
+  - zabbix-agent2
 
 # -------------------------
 # Users/Groups

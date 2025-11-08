@@ -12,4 +12,5 @@ set softtabstop=4
 set expandtab
 set shiftwidth=4
 set smarttab
+set mouse-=a
 filetype plugin on
