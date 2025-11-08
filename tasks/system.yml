@@ -38,6 +38,30 @@
     owner: root
     group: root
 
+- name: COPY | Configure SSHD Slice
+  ansible.builtin.copy:
+    src: etc/systemd/system/ssh.service.d/slice.conf
+    dest: /etc/systemd/system/ssh.service.d/slice.conf
+    mode: 0644
+    owner: root
+    group: root
+
+- name: COPY | Configure SSHD critical.slice
+  ansible.builtin.copy:
+    src: etc/systemd/system/critical.slice
+    dest: /etc/systemd/system/critical.slice
+    mode: 0644
+    owner: root
+    group: root
+
+- name: COPY | Configure SSHD nice
+  ansible.builtin.copy:
+    src: etc/systemd/system/ssh.service.d/override.conf
+    dest: /etc/systemd/system/ssh.service.d/override.conf
+    mode: 0644
+    owner: root
+    group: root
+
 - name: COPY | Configure vnstat
   ansible.builtin.copy:
     src: etc/vnstat.conf
