@@ -8,6 +8,7 @@
     - files:
         - "{{ ansible_distribution }}/{{ ansible_distribution_release }}.yml"
         - "{{ ansible_distribution }}/main.yml"
+        - "{{ ansible_distribution }}/swapfile.yml"
   loop_control:
     loop_var: vars_file_item
   tags: always
@@ -35,6 +36,11 @@
 
 - name: IMPORT_TASKS | Misc system configuration
   ansible.builtin.import_tasks: system.yml
+
+- name: IMPORT_TASKS | Swapfile configuration
+  ansible.builtin.import_tasks: swapfile.yml
+  when: 
+    - swapfile_enabled | default(false)
 
 - name: IMPORT_TASKS | Manage system users
   ansible.builtin.import_tasks: user.yml

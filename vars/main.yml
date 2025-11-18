@@ -88,6 +88,7 @@ dbs_packages:
   - zabbix-agent2
   - zlib1g-dev
   - zip
+  - zram-tools
 
 dbs_backports_packages: []
 
