@@ -5,6 +5,35 @@ Ansible Debian bootstrap
 
 **Forked from** [HanXHX/ansible-debian-bootstrap](https://github.com/HanXHX/ansible-debian-bootstrap) to deploy only Debian servers. Do not use it if you want to bootstrap Ubuntu/Devuan/Raspbian servers.
 
+## TL;DR; Example playbook
+
+```
+---
+- hosts: all
+  become: yes
+  roles:
+    - pythoniccafe.debian_bootstrap
+  vars:
+    dbs_hostname: 'myhostname'
+    dbs_groups:
+      - name: 'docker'
+    dbs_users:
+      - name: 'leandro'
+        sudo: true
+        clear_password: 'somepasswd'
+        groups:
+          - docker
+        ssh_keys:
+          - 'ssh-ed25519 blablabla'
+        shell: '/bin/bash'
+    swapfile_enabled: true # default is false
+    swapfile_size: '2G' # M, MiB, G, GiB (anything accepted by fallocate)
+    swapfile_swappiness: '1' # default is 10
+    swapfile_vfs_cache_pressure: '60' # default is 50
+```
+
+## Now the rest of README
+
 This role bootstraps Debian hosts:
 
 - Configure APT (sources.list)
@@ -15,6 +44,7 @@ This role bootstraps Debian hosts:
 - Deploy bashrc, vimrc for root
 - Update few alternatives
 - Configure system: hostname, timezone and locale
+- Swapfile creation (optional, default to false)
 - Sysctl tuning
 
 Supported versions
@@ -31,7 +61,6 @@ Requirements
 ------------
 
 - Ansible >= 2.11
-- Collections: [ansible.posix collection](https://galaxy.ansible.com/ansible/posix) / [community.general](https://galaxy.ansible.com/community/general)
 
 Role Variables
 --------------
@@ -63,6 +92,7 @@ Theses variables define hostname to configure APT (normal repo and backports):
 - `dbs_use_systemd`: delete systemd if set to false (persistent)
 - `dbs_use_dotfiles`: overwrite root dotfiles (bashrc, screenrc, vimrc)
 - `dbs_uninstall_packages`: packages list to uninstall
+- `swapfile_enabled`: it's mandatory to set true if you want to create a swapfile.
 
 ### Alternatives
 
@@ -123,17 +153,6 @@ Dependencies
 
 None.
 
-Example Playbook
-----------------Author Information
-------------------
-
-- Twitter: [@hanxhx_](https://twitter.com/hanxhx_)
-
-    - hosts: servers
-      roles:
-         - { role: HanXHX.debian_bootstrap }
-
-
 About Docker
 ------------
 
@@ -148,6 +167,8 @@ How to develop and test this role
 
 ### Vagrant way
 
+TODO: Replace Vagrant with `incus-incant`.
+
 Install vagrant + libvirt or docker
 
 ```commandline
@@ -159,8 +180,3 @@ License
 -------
 
 GPLv2
-
-Author Information
-------------------
-
-- Twitter: [@hanxhx_](https://twitter.com/hanxhx_)

@@ -1,0 +1,37 @@
+---
+- name: Check existing swapfile
+  stat:
+    path: /swapfile
+  register: swapfile_check
+
+- name: Fallocate swapfile
+  command: fallocate -l {{ swapfile_size }} /swapfile
+  when: not swapfile_check.stat.exists
+
+- name: Swapfile permissions
+  file:
+    path: /swapfile
+    mode: '0600'
+    owner: root
+    group: root
+
+- name: Format swapfile
+  command: mkswap /swapfile
+  when: not swapfile_check.stat.exists
+
+- name: Adicionar swapfile ao fstab
+  lineinfile:
+    path: /etc/fstab
+    line: '/swapfile none swap sw 0 0'
+    state: present
+    create: yes
+  when: not swapfile_check.stat.exists
+
+- name: Activate swapfile
+  command: swapon -a
+  when: not swapfile_check.stat.exists
+
+- name: Check if swapfile is active
+  command: swapon --show
+  register: swap_status
+  changed_when: false
