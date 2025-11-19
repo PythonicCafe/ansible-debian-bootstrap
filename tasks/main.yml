@@ -8,7 +8,6 @@
     - files:
         - "{{ ansible_distribution }}/{{ ansible_distribution_release }}.yml"
         - "{{ ansible_distribution }}/main.yml"
-        - "{{ ansible_distribution }}/swapfile.yml"
   loop_control:
     loop_var: vars_file_item
   tags: always
@@ -41,6 +40,17 @@
   ansible.builtin.import_tasks: swapfile.yml
   when: 
     - swapfile_enabled | default(false)
+
+- name: IMPORT_TASKS | Docker Installation
+  ansible.builtin.import_tasks: docker.yml
+  when: 
+    - is_docker | default(false)
+
+- name: IMPORT_TASKS | Dokku Installation
+  ansible.builtin.import_tasks: dokku.yml
+  when: 
+    - is_docker | default(false)
+    - is_dokku | default(false)
 
 - name: IMPORT_TASKS | Manage system users
   ansible.builtin.import_tasks: user.yml

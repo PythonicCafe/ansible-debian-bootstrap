@@ -30,6 +30,14 @@ Ansible Debian bootstrap
     swapfile_size: '2G' # M, MiB, G, GiB (anything accepted by fallocate)
     swapfile_swappiness: '1' # default is 10
     swapfile_vfs_cache_pressure: '60' # default is 50
+    is_docker: true
+    is_dokku: true (is_docker must be true to perform Dokku installation)
+    # You don't need to set variables below (unless you want it)
+    # These variables were created to skip debconf interactive questions
+    dokku_vhost_enable: false
+    dokku_hostname: "some.host.name"
+    dokku_skip_key_file: true
+    dokku_nginx_enable: true
 ```
 
 ## Now the rest of README
@@ -46,6 +54,7 @@ This role bootstraps Debian hosts:
 - Configure system: hostname, timezone and locale
 - Swapfile creation (optional, default to false)
 - Sysctl tuning
+- Docker and Dokku installation
 
 Supported versions
 
