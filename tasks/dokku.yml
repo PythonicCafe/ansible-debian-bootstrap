@@ -1,0 +1,53 @@
+# tasks/dokku.yml
+---
+- name: Dokku | Create trusted.gpg.d directory
+  file:
+    path: /etc/apt/trusted.gpg.d
+    state: directory
+    mode: '0755'
+
+- name: Dokku | Download and add GPG key
+  get_url:
+    url: https://packagecloud.io/dokku/dokku/gpgkey
+    dest: /etc/apt/trusted.gpg.d/dokku.asc
+    mode: '0644'
+
+- name: Dokku | Add repositories
+  apt_repository:
+    repo: "deb https://packagecloud.io/dokku/dokku/debian/ {{ ansible_distribution_release | lower }} main"
+    state: present
+    filename: dokku
+
+- name: Dokku | Update apt cache
+  apt:
+    update_cache: yes
+
+- name: Dokku | Set debconf selections
+  debconf:
+    name: "dokku"
+    question: "{{ item.question }}"
+    value: "{{ item.value }}"
+    vtype: "{{ item.vtype }}"
+  loop:
+    - { question: 'dokku/vhost_enable', value: "{{ dokku_vhost_enable }}", vtype: 'boolean' }
+    - { question: 'dokku/hostname', value: "{{ dokku_hostname }}", vtype: 'string' }
+    - { question: 'dokku/skip_key_file', value: "{{ dokku_skip_key_file }}", vtype: 'boolean' }
+    - { question: 'dokku/nginx_enable', value: "{{ dokku_nginx_enable }}", vtype: 'boolean' }
+
+- name: Dokku | Install Dokku
+  apt:
+    name: dokku
+    state: present
+
+- name: Dokku | Install core plugins
+  command: dokku plugin:install-dependencies --core
+  become: yes
+
+- name: Dokku | Check installed version
+  command: dokku version
+  register: dokku_version
+  changed_when: false
+
+- name: Dokku | Show version
+  debug:
+    msg: "Dokku {{ dokku_version.stdout }} successfully installed"
